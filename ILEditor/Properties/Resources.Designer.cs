@@ -19,7 +19,7 @@ namespace ILEditor.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -211,6 +211,31 @@ namespace ILEditor.Properties {
         public static string darkCPP {
             get {
                 return ResourceManager.GetString("darkCPP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;SyntaxDefinition name=&quot;PF&quot;
+        ///        xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot;&gt;
+        ///  &lt;Color name=&quot;Comment&quot; foreground=&quot;#4FB548&quot; /&gt;
+        ///  &lt;Color name=&quot;String&quot; foreground=&quot;#4FB548&quot; /&gt;
+        ///
+        ///  &lt;!-- This is the main ruleset. --&gt;
+        ///  &lt;RuleSet ignoreCase=&quot;true&quot;&gt;
+        ///    &lt;Span color=&quot;Comment&quot; begin=&quot;//&quot; /&gt;
+        ///    &lt;Span color=&quot;Comment&quot; begin=&quot;\*\*&quot; /&gt;
+        ///    
+        ///    &lt;Span color=&quot;String&quot;&gt;
+        ///      &lt;Begin&gt;&apos;&lt;/Begin&gt;
+        ///      &lt;End&gt;&apos;&lt;/End&gt;
+        ///    &lt;/Span&gt;
+        ///    
+        ///    &lt;Keywords foreground=&quot;#E05555&quot;&gt;
+        ///      &lt;Word&gt;TEXT&lt;/Word [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string darkDDS {
+            get {
+                return ResourceManager.GetString("darkDDS", resourceCulture);
             }
         }
         
@@ -459,6 +484,32 @@ namespace ILEditor.Properties {
         public static string lightCPP {
             get {
                 return ResourceManager.GetString("lightCPP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;SyntaxDefinition name=&quot;PF&quot;
+        ///        xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot;&gt;
+        ///  &lt;Color name=&quot;Comment&quot; foreground=&quot;Green&quot; /&gt;
+        ///  &lt;Color name=&quot;String&quot; foreground=&quot;Green&quot; /&gt;
+        ///
+        ///  &lt;!-- This is the main ruleset. --&gt;
+        ///  &lt;RuleSet ignoreCase=&quot;true&quot;&gt;
+        ///    &lt;Span color=&quot;Comment&quot; begin=&quot;//&quot; /&gt;
+        ///    &lt;Span color=&quot;Comment&quot; begin=&quot;\*\*&quot; /&gt;
+        ///    
+        ///    &lt;Span color=&quot;String&quot;&gt;
+        ///      &lt;Begin&gt;&apos;&lt;/Begin&gt;
+        ///      &lt;End&gt;&apos;&lt;/End&gt;
+        ///    &lt;/Span&gt;
+        ///    
+        ///    &lt;Keywords foreground=&quot;Brown&quot;&gt;
+        ///      &lt;Word&gt;TEXT&lt;/Word&gt;
+        ///    [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string lightDDS {
+            get {
+                return ResourceManager.GetString("lightDDS", resourceCulture);
             }
         }
         

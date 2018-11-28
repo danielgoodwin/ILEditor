@@ -14,330 +14,244 @@ namespace ILEditor.Classes
     class IBMi
     {
         public static Config CurrentSystem;
-        private static FtpClient Client;
+        private static int transportIdx = 1;
+        public static IBMFTPi ibmftp;
+        public static IBMDDMi ibmddm;
 
-        public readonly static Dictionary<string, string> FTPCodeMessages = new Dictionary<string, string>()
-        {
-            { "425", "Not able to open data connection. This might mean that your system is blocking either: FTP, port 20 or port 21. Please allow these through the Windows Firewall. Check the Welcome screen for a 'Getting an FTP error?' and follow the instructions." },
-            { "426", "Connection closed; transfer aborted. The file may be locked." },
-            { "426T", "Member was saved but characters have been truncated as record length has been reached." },
-            { "426L", "Member was not saved due to a possible lock." },
-            { "426F", "Member was not found. Perhaps it was deleted." },
-            { "530", "Configuration username and password incorrect." }
-        };
-
-        public static void HandleError(string Code, string Message)
-        {
-            string ErrorMessageText = "";
-            switch (Code)
-            {
-                case "200":
-                    ErrorMessageText = "425";
-                    break;
-
-                case "425":
-                case "426":
-                case "530":
-                case "550":
-                    ErrorMessageText = Code;
-
-                    switch (Code)
-                    {
-                        case "426":
-                            if (Message.Contains("truncated"))
-                                ErrorMessageText = "426T";
-
-                            else if (Message.Contains("Unable to open or create"))
-                                ErrorMessageText = "426L";
-
-                            else if (Message.Contains("not found"))
-                                ErrorMessageText = "426F";
-
-                            break;
-                        case "550":
-                            if (Message.Contains("not created in"))
-                                ErrorMessageText = "550NC";
-                            break;
-                    }
-
-                    break;
-            }
-
-            if (FTPCodeMessages.ContainsKey(ErrorMessageText))
-                MessageBox.Show(FTPCodeMessages[ErrorMessageText], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private static FtpDataConnectionType GetFtpDataConnectionType(string Type)
-        {
-            if (Enum.TryParse(Type, out FtpDataConnectionType result))
-                return result;
-            else
-                return FtpDataConnectionType.AutoActive;
-        }
+        private static IBMiTransport[] transports = { ibmftp, ibmddm };
+        private static bool useDDM = true;
 
         public static bool IsConnected()
         {
-            if (Client != null)
-                return Client.IsConnected;
+            if (useDDM)
+            {
+                return IBMDDMi.IsConnected();
+            }
             else
-                return false;
+            {
+                return IBMFTPi.IsConnected();
+            }
+
         }
         public static string FTPFile = "";
         public static bool Connect(bool OfflineMode = false, string promptedPassword = "")
         {
-            string[] remoteSystem;
-            bool result = false;
-            try
+            if (useDDM)
             {
-                FTPFile = IBMiUtils.GetLocalFile("QTEMP", "FTPLOG", DateTime.Now.ToString("MMddTHHmm"), "txt");
-                FtpTrace.AddListener(new TextWriterTraceListener(FTPFile));
-                FtpTrace.LogUserName = false;   // hide FTP user names
-                FtpTrace.LogPassword = false;   // hide FTP passwords
-                FtpTrace.LogIP = false; 	// hide FTP server IP addresses
-
-                string password = "";
-
-                remoteSystem = CurrentSystem.GetValue("system").Split(':');
-
-                if (promptedPassword == "")
-                    password = Password.Decode(CurrentSystem.GetValue("password"));
-                else
-                    password = promptedPassword;
-
-                Client = new FtpClient(remoteSystem[0], CurrentSystem.GetValue("username"), password);
-
-                if (OfflineMode == false)
-                {
-                    Client.UploadDataType = FtpDataType.ASCII;
-                    Client.DownloadDataType = FtpDataType.ASCII;
-
-                    //FTPES is configurable
-                    if (IBMi.CurrentSystem.GetValue("useFTPES") == "true")
-                        Client.EncryptionMode = FtpEncryptionMode.Explicit;
-
-                    //Client.DataConnectionType = FtpDataConnectionType.AutoPassive; //THIS IS THE DEFAULT VALUE
-                    Client.DataConnectionType = GetFtpDataConnectionType(CurrentSystem.GetValue("transferMode"));
-                    Client.SocketKeepAlive = true;
-
-                    if (remoteSystem.Length == 2)
-                        Client.Port = int.Parse(remoteSystem[1]);
-
-                    Client.ConnectTimeout = 5000;
-                    Client.Connect();
-
-                    //Change the user library list on connection
-                    RemoteCommand($"CHGLIBL LIBL({ CurrentSystem.GetValue("datalibl").Replace(',', ' ')}) CURLIB({ CurrentSystem.GetValue("curlib") })");
-
-                    System.Timers.Timer timer = new System.Timers.Timer();
-                    timer.Interval = 60000;
-                    timer.Elapsed += new ElapsedEventHandler(KeepAliveFunc);
-                    timer.Start();
-                }
-
-                result = true;
+                return IBMDDMi.Connect(OfflineMode, promptedPassword);
             }
-            catch (Exception e)
+            else
             {
-                MessageBox.Show("Unable to connect to " + CurrentSystem.GetValue("system") + " - " + e.Message, "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return IBMFTPi.Connect(OfflineMode, promptedPassword);
             }
-
-            return result;
         }
 
         public static void Disconnect()
         {
-            if (Client.IsConnected)
-            {
-                Client.Disconnect();
-            }
-        }
 
-        private static void KeepAliveFunc(object sender, ElapsedEventArgs e)
-        {
-            bool showError = !Client.IsConnected;
-            if (Client.IsConnected)
+            if (useDDM)
             {
-                try {
-                    Client.Execute("NOOP");
-                    showError = false;
-                }
-                catch
-                {
-                    showError = true;
-                }
+                IBMDDMi.Disconnect();
+            }
+            else
+            {
+                IBMFTPi.Disconnect();
             }
 
-            if (showError)
-                Editor.TheEditor.SetStatus("Warning! You lost connection " + CurrentSystem.GetValue("system") + "!");
         }
+
 
         public static string GetSystem()
         {
-            if (Client != null)
-                if (Client.IsConnected)
-                    return Client.SystemType;
-                else
-                    return "";
+            if (useDDM)
+            {
+                return IBMDDMi.GetSystem();
+            }
             else
-                return "";
+            {
+                return IBMFTPi.GetSystem();
+            }
         }
 
         //Returns false if successful
-        public static bool DownloadFile(string Local, string Remote)
+        public static bool DownloadFile(string Local, string Remote, DDMStreamCallbackAdaptor adaptor = null)
         {
-            bool Result = false;
-            try
+            if (useDDM)
             {
-                if (Client.IsConnected)
-                    Result = !Client.DownloadFile(Local, Remote, true);
-                else
-                    return true; //error
+                return IBMDDMi.DownloadFile(Local, Remote, adaptor);
             }
-            catch (Exception e)
+            else
             {
-                if (e.InnerException is FtpCommandException)
-                {
-                    FtpCommandException err = e.InnerException as FtpCommandException;
-                    HandleError(err.CompletionCode, err.Message);
-                }
-                Result = true;
+                return IBMFTPi.DownloadFile(Local, Remote);
             }
-
-            return Result;
         }
 
+        
         //Returns true if successful
         public static bool UploadFile(string Local, string Remote)
         {
-            if (Client.IsConnected)
-                return Client.UploadFile(Local, Remote, FtpExists.Overwrite);
+            if (useDDM)
+            {
+                return IBMDDMi.UploadFile(Local, Remote);
+            }
             else
-                return false;
+            {
+                return IBMFTPi.UploadFile(Local, Remote);
+            }
         }
 
         //Returns true if successful
         public static bool RemoteCommand(string Command, bool ShowError = true)
         {
-            if (Client.IsConnected)
+            if (useDDM)
             {
-                string inputCmd = "RCMD " + Command;
-                //IF THIS CRASHES CLIENT DISCONNECTS!!!
-                FtpReply reply = Client.Execute(inputCmd);
-
-                if (ShowError)
-                    HandleError(reply.Code, reply.ErrorMessage);
-
-                return reply.Success;
+                return IBMDDMi.RemoteCommand(Command, ShowError);
             }
             else
             {
-                return false;
+                return IBMFTPi.RemoteCommand(Command, ShowError);
             }
         }
 
+       
         public static string RemoteCommandResponse(string Command)
         {
-            if (Client.IsConnected)
+            if (useDDM)
             {
-                string inputCmd = "RCMD " + Command;
-                FtpReply reply = Client.Execute(inputCmd);
-
-                if (reply.Success)
-                    return "";
-                else
-                    return reply.ErrorMessage;
+                return IBMDDMi.RemoteCommandResponse(Command);
             }
             else
             {
-                return "Not connected.";
+                return IBMFTPi.RemoteCommandResponse(Command);
             }
         }
 
         //Returns true if successful
         public static bool RunCommands(string[] Commands)
         {
-            bool result = true;
-            if (Client.IsConnected)
+            if(useDDM)
             {
-                foreach (string Command in Commands)
-                {
-                    if (RemoteCommand(Command) == false)
-                        result = false;
-                }
+                return IBMDDMi.RunCommands(Commands);
             }
             else
             {
-                result = false;
+                return IBMFTPi.RunCommands(Commands);
             }
-
-            return result;
         }
 
         public static bool FileExists(string remoteFile)
         {
-            return Client.FileExists(remoteFile);
+            if (useDDM)
+            {
+                return IBMDDMi.FileExists(remoteFile);
+            }
+            else
+            {
+                return IBMFTPi.FileExists(remoteFile);
+            }
         }
         public static bool DirExists(string remoteDir)
         {
-            try
+            if (useDDM)
             {
-                return Client.DirectoryExists(remoteDir);
+                return IBMDDMi.DirExists(remoteDir);
             }
-            catch (Exception ex)
+            else
             {
-                Editor.TheEditor.SetStatus(ex.Message + " - please try again.");
-                return false;
+                return IBMFTPi.DirExists(remoteDir);
             }
         }
         public static FtpListItem[] GetListing(string remoteDir)
         {
-            return Client.GetListing(remoteDir);
+            if (useDDM)
+            {
+                return IBMDDMi.GetListing(remoteDir);
+            }
+            else
+            {
+                return IBMFTPi.GetListing(remoteDir);
+            }
         }
 
         public static string RenameDir(string remoteDir, string newName)
         {
-            string[] pieces = remoteDir.Split('/');
-            pieces[pieces.Length - 1] = newName;
-            newName = String.Join("/", pieces);
-
-            if (Client.MoveDirectory(remoteDir, String.Join("/", pieces)))
-                return newName;
+            if (useDDM)
+            {
+                return IBMDDMi.RenameDir(remoteDir, newName);
+            }
             else
-                return remoteDir;
+            {
+                return IBMFTPi.RenameDir(remoteDir, newName);
+            }
         }
         public static string RenameFile(string remoteFile, string newName)
         {
-            string[] pieces = remoteFile.Split('/');
-            pieces[pieces.Length - 1] = newName;
-            newName = String.Join("/", pieces);
-
-            if (Client.MoveFile(remoteFile, newName))
-                return newName;
+            if (useDDM)
+            {
+                return IBMDDMi.RenameFile(remoteFile, newName);
+            }
             else
-                return remoteFile;
+            {
+                return IBMFTPi.RenameFile(remoteFile, newName);
+            }
         }
 
         public static void DeleteDir(string remoteDir)
         {
-            Client.DeleteDirectory(remoteDir, FtpListOption.AllFiles);
+            if (useDDM)
+            {
+                IBMDDMi.DeleteDir(remoteDir);
+            }
+            else
+            {
+                IBMFTPi.DeleteDir(remoteDir);
+            }
         }
 
         public static void DeleteFile(string remoteFile)
         {
-            Client.DeleteFile(remoteFile);
+            if (useDDM)
+            {
+                IBMDDMi.DeleteFile(remoteFile);
+            }
+            else
+            {
+                IBMFTPi.DeleteFile(remoteFile);
+            }
         }
 
         public static void SetWorkingDir(string RemoteDir)
         {
-            Client.SetWorkingDirectory(RemoteDir);
+            if (useDDM)
+            {
+                IBMDDMi.SetWorkingDir(RemoteDir);
+            }
+            else
+            {
+                IBMFTPi.SetWorkingDir(RemoteDir);
+            }
         }
         public static void CreateDirecory(string RemoteDir)
         {
-            Client.CreateDirectory(RemoteDir);
+            if (useDDM)
+            {
+                IBMDDMi.CreateDirecory(RemoteDir);
+            }
+            else
+            {
+                IBMFTPi.CreateDirecory(RemoteDir);
+            }
         }
         public static void UploadFiles(string RemoteDir, string[] Files)
         {
-            Client.UploadFiles(Files, RemoteDir, FtpExists.Overwrite, true);
+            if (useDDM)
+            {
+                IBMDDMi.UploadFiles(RemoteDir, Files);
+            }
+            else
+            {
+                IBMFTPi.UploadFiles(RemoteDir, Files);
+            }
         }
     }
 }

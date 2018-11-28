@@ -88,17 +88,87 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentFTP, Version=19.1.2.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentFTP.19.1.2\lib\net45\FluentFTP.dll</HintPath>
+    <Reference Include="antlr4-4.5.3, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\rpgleparser.02.0.2.1-SNAPSHOT\lib\net46\antlr4-4.5.3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="antlr4-runtime-4.5, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\rpgleparser.02.0.2.1-SNAPSHOT\lib\net46\antlr4-runtime-4.5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="commons-lang3-3.4, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\rpgleparser.02.0.2.1-SNAPSHOT\lib\net46\commons-lang3-3.4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentFTP, Version=19.2.2.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentFTP.19.2.2\lib\net45\FluentFTP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="freetofixedrpgleparser-0.0.1-SNAPSHOT, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external\freetofixedrpgleparser-0.0.1-SNAPSHOT.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
+    <Reference Include="IKVM.OpenJDK.Beans, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Beans.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Security, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Text, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Text.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Tools, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Tools.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Util.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.Runtime, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.Runtime.JNI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="jtopenlite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\jtopenlite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4j-1.2.17, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\rpgleparser.02.0.2.1-SNAPSHOT\lib\net46\log4j-1.2.17.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="rpgleparser-0.2-SNAPSHOT, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\rpgleparser.02.0.2.1-SNAPSHOT\lib\net46\rpgleparser-0.2-SNAPSHOT.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="slf4j-api-1.7.10, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\rpgleparser.02.0.2.1-SNAPSHOT\lib\net46\slf4j-api-1.7.10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="slf4j-log4j12-1.7.10, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\rpgleparser.02.0.2.1-SNAPSHOT\lib\net46\slf4j-log4j12-1.7.10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -119,11 +189,13 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking">
-      <HintPath>..\packages\DockPanelSuite.3.0.4\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=3.0.4.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
-      <HintPath>..\packages\DockPanelSuite.ThemeVS2015.3.0.4\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.ThemeVS2015.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
@@ -132,10 +204,15 @@
     <Compile Include="Classes\AutoCompleteData.cs" />
     <Compile Include="Classes\BindingEntry.cs" />
     <Compile Include="Classes\Config.cs" />
+    <Compile Include="Classes\DDMStreamCallbackAdaptor.cs" />
     <Compile Include="Classes\DiffMatchPatch.cs" />
     <Compile Include="Classes\ErrorHandle.cs" />
+    <Compile Include="Classes\IBMDDMi.cs" />
+    <Compile Include="Classes\IBMFTPi.cs" />
     <Compile Include="Classes\IBMi.cs" />
+    <Compile Include="Classes\IBMiTransport.cs" />
     <Compile Include="Classes\IBMiUtils.cs" />
+    <Compile Include="Classes\LanguageTools\FixedtoFree.cs" />
     <Compile Include="Classes\LanguageTools\CLFile.cs" />
     <Compile Include="Classes\RemoteSource.cs" />
     <Compile Include="Classes\ILEObject.cs" />
@@ -578,6 +655,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\darkDDS.xml" />
     <Content Include="Resources\Diagram.html" />
     <None Include="Resources\Diagram\diagram.html" />
     <Content Include="Resources\Help\Compiling.html" />
@@ -590,6 +668,9 @@
     </Content>
     <Content Include="Resources\Highlighting\Dark\darkCOBOL.xml" />
     <Content Include="Resources\Highlighting\Dark\darkCPP.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\Highlighting\Dark\darkDDS.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Highlighting\Dark\darkRPG.xml">
@@ -612,6 +693,9 @@
     <None Include="Resources\NewIcons\refresh.png" />
     <None Include="Resources\NewIcons\filedelete.png" />
     <Content Include="Resources\Highlighting\Dark\darkPython.xml" />
+    <Content Include="Resources\Highlighting\Light\lightDDS.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resources\Highlighting\Light\lightPython.xml" />
     <None Include="Resources\NewIcons\books.png" />
     <None Include="Resources\NewIcons\computer.png" />
@@ -620,6 +704,7 @@
     <None Include="Resources\NewIcons\divide-mathematical-sign.png" />
     <None Include="Resources\NewIcons\cube.png" />
     <None Include="Resources\NewIcons\bug.png" />
+    <Content Include="Resources\lightDDS.xml" />
     <Content Include="worksofbarry_mOq_icon.ico" />
   </ItemGroup>
   <ItemGroup>

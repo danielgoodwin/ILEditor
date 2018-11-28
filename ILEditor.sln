@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILEditor", "ILEditor\ILEditor.csproj", "{9F66C8A3-C1D9-4CF0-B6F4-A7B9B8E802BB}"
 EndProject
@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "IlEditorSetup", "IlEditorSetup\IlEditorSetup.vdproj", "{372477EB-BD76-42ED-A334-E0BC9437F76E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{9F66C8A3-C1D9-4CF0-B6F4-A7B9B8E802BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F66C8A3-C1D9-4CF0-B6F4-A7B9B8E802BB}.Release|x86.ActiveCfg = Release|Any CPU
 		{9F66C8A3-C1D9-4CF0-B6F4-A7B9B8E802BB}.Release|x86.Build.0 = Release|Any CPU
+		{372477EB-BD76-42ED-A334-E0BC9437F76E}.Debug|Any CPU.ActiveCfg = Debug
+		{372477EB-BD76-42ED-A334-E0BC9437F76E}.Debug|x86.ActiveCfg = Debug
+		{372477EB-BD76-42ED-A334-E0BC9437F76E}.Release|Any CPU.ActiveCfg = Release
+		{372477EB-BD76-42ED-A334-E0BC9437F76E}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -47,10 +47,12 @@ namespace ILEditor.UserTools
                         Editor.TheEditor.AddTool(new SpoolListing(), DockState.DockRight, true);
                         break;
                     case "IFS":
-                        Editor.TheEditor.AddTool(new IFSBrowser(), DockState.DockRight);
+                        //Editor.TheEditor.AddTool(new IFSBrowser(), DockState.DockRight);
+                        Editor.TheEditor.SetStatus("IFS Browse not supported");
                         break;
                     case "OBJDIAG":
-                        new Forms.FindReferences().ShowDialog();
+                        //new Forms.FindReferences().ShowDialog();
+                        Editor.TheEditor.SetStatus("Object diagnostics not supported");
                         break;
                 }
             }

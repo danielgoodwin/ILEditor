@@ -129,8 +129,9 @@ namespace FindReplace
 
         static void MarkerBrushChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SearchReplacePanel panel)
+            if (d is SearchReplacePanel)
             {
+                SearchReplacePanel panel = (SearchReplacePanel)d;
                 panel._renderer.MarkerBrush = (Brush)e.NewValue;
             }
         }
@@ -142,8 +143,9 @@ namespace FindReplace
 
         static void SearchPatternChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SearchReplacePanel panel)
+            if (d is SearchReplacePanel )
             {
+                SearchReplacePanel panel = (SearchReplacePanel)d;
                 panel.ValidateSearchText();
                 panel.UpdateSearch();
             }
@@ -204,12 +206,12 @@ namespace FindReplace
 
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Find, (sender, e) =>
             {
-                IsReplaceMode = false;
+                //IsReplaceMode = false;
                 Reactivate();
             }));
-            CommandBindings.Add(new CommandBinding(ApplicationCommands.Replace, (sender, e) => IsReplaceMode = true));
-            CommandBindings.Add(new CommandBinding(SearchCommandsEx.ReplaceNext, (sender, e) => ReplaceNext(), (sender, e) => e.CanExecute = IsReplaceMode));
-            CommandBindings.Add(new CommandBinding(SearchCommandsEx.ReplaceAll, (sender, e) => ReplaceAll(), (sender, e) => e.CanExecute = IsReplaceMode));
+            //CommandBindings.Add(new CommandBinding(ApplicationCommands.Replace, (sender, e) => IsReplaceMode = true));
+            //CommandBindings.Add(new CommandBinding(SearchCommandsEx.ReplaceNext, (sender, e) => ReplaceNext(), (sender, e) => e.CanExecute = IsReplaceMode));
+            //CommandBindings.Add(new CommandBinding(SearchCommandsEx.ReplaceAll, (sender, e) => ReplaceAll(), (sender, e) => e.CanExecute = IsReplaceMode));
 
             IsClosed = true;
         }
@@ -431,15 +433,25 @@ namespace FindReplace
             SearchOptionsChanged?.Invoke(this, e);
         }
 
+        /*
         public static readonly DependencyProperty IsReplaceModeProperty = DependencyProperty.Register(
             "IsReplaceMode", typeof(bool), typeof(SearchReplacePanel), new FrameworkPropertyMetadata());
 
         public bool IsReplaceMode
         {
-            get => (bool)GetValue(IsReplaceModeProperty);
-            set => SetValue(IsReplaceModeProperty, value);
+            get
+            {
+                bool val = IsReplaceModeProperty;
+                return val;
+            }
+ 
+ 
+        //get => (bool)GetValue(IsReplaceModeProperty);
+        //    set => SetValue(IsReplaceModeProperty, value);
         }
+        */
 
+            /*
         public static readonly DependencyProperty ReplacePatternProperty = DependencyProperty.Register(
             "ReplacePattern", typeof(string), typeof(SearchReplacePanel), new FrameworkPropertyMetadata());
 
@@ -448,6 +460,7 @@ namespace FindReplace
             get => (string)GetValue(ReplacePatternProperty);
             set => SetValue(ReplacePatternProperty, value);
         }
+        */
 
         /// <summary>
         /// Creates a SearchReplacePanel and installs it to the TextEditor's TextArea.
@@ -475,19 +488,19 @@ namespace FindReplace
 
         public void ReplaceNext()
         {
-            if (!IsReplaceMode) return;
+            //if (!IsReplaceMode) return;
 
             FindNext();
             if (!_textArea.Selection.IsEmpty)
             {
-                _textArea.Selection.ReplaceSelectionWithText(ReplacePattern ?? string.Empty);
+               // _textArea.Selection.ReplaceSelectionWithText(ReplacePattern ?? string.Empty);
             }
         }
 
         public void ReplaceAll()
         {
-            if (!IsReplaceMode) return;
-
+            //if (!IsReplaceMode) return;
+            /*
             var replacement = ReplacePattern ?? string.Empty;
             var document = _textArea.Document;
             using (document.RunUpdate())
@@ -499,6 +512,7 @@ namespace FindReplace
                         new StringTextSource(replacement));
                 }
             }
+            */
         }
 
         private class SearchReplaceInputHandler : TextAreaInputHandler
@@ -535,7 +549,7 @@ namespace FindReplace
 
             private void FindOrReplace(bool isReplaceMode)
             {
-                _panel.IsReplaceMode = isReplaceMode;
+                //_panel.IsReplaceMode = isReplaceMode;
                 _panel.Open();
                 if (!TextArea.Selection.IsEmpty && !TextArea.Selection.IsMultiline)
                     _panel.SearchPattern = TextArea.Selection.GetText();

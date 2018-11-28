@@ -327,28 +327,35 @@ namespace ILEditor.Classes
         {
             if (ClientDDM != null && !ClientDDM.isClosed())
             {
-                java.util.List lstMessages = ClientDDM.executeReturnMessageList(Command);
-                if (lstMessages == null || lstMessages.size() == 0)
+                try
                 {
-                    return true;
-                }
-                else
-                {
-                    for (int msgidx = 0; msgidx < lstMessages.size(); msgidx++)
+                    java.util.List lstMessages = ClientDDM.executeReturnMessageList(Command);
+                    if (lstMessages == null || lstMessages.size() == 0)
                     {
-                        com.ibm.jtopenlite.Message msg = (com.ibm.jtopenlite.Message)lstMessages.get(msgidx);
-                        if (msg.getSeverity() > 1) // DDM returns sev 0-8 range (AS400 severity / 10 if you will )
+                        return true;
+                    }
+                    else
+                    {
+                        for (int msgidx = 0; msgidx < lstMessages.size(); msgidx++)
                         {
-                            if (ShowError)
+                            com.ibm.jtopenlite.Message msg = (com.ibm.jtopenlite.Message)lstMessages.get(msgidx);
+                            if (msg.getSeverity() > 1) // DDM returns sev 0-8 range (AS400 severity / 10 if you will )
                             {
-                                MessageBox.Show(msg.getText(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                if (ShowError)
+                                {
+                                    MessageBox.Show(msg.getText(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                return false;
                             }
-                            return false;
                         }
                     }
+                    // Get here means no messages with Sev > 10, so ok
+                    return true;
+                } catch (Exception ex)
+                {
+                    // command failed.
+                    return false;
                 }
-                // Get here means no messages with Sev > 10, so ok
-                return true;
             }
             else
             {

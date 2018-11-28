@@ -14,10 +14,12 @@ namespace ILEditor.Classes
 
         private static int _FileID;
         private static Dictionary<int, string> _FileIDs;
+        private static Dictionary<string, int> _FileIDLookup;
         private static Dictionary<int, List<LineError>> _Errors;
         private static Dictionary<int, List<expRange>> _Expansions;
         private static Dictionary<int, bool> _TrackCopies; //Used for embedded sql with copies/includes using *lvl2
         private static Boolean _Success = false;
+        private static int _nextFileId = 1;
 
         public static void getErrors(string lib, string obj)
         {
@@ -25,12 +27,15 @@ namespace ILEditor.Classes
             obj = obj.Trim().ToUpper();
 
             _Success = false;
-            string filetemp = IBMiUtils.DownloadMember(lib, "EVFEVENT", obj);
+            //string filetemp = IBMiUtils.DownloadMember(lib, "EVFEVENT", obj);
+            string filetemp = IBMiUtils.DownloadMember(lib, "QBIFERR", obj, 
+                        new IBMDDMi.AllFieldsDDMCallbackAdapter());
 
             if (filetemp != "")
             {
                 ErrorHandle.doName(lib.ToUpper() + '/' + obj.ToUpper());
                 ErrorHandle.setLines(File.ReadAllLines(filetemp, Program.Encoding));
+
                 _Success = true;
             }
         }
@@ -53,6 +58,69 @@ namespace ILEditor.Classes
         }
 
         public static void wrkErrors()
+        {
+
+            _FileIDLookup = new Dictionary<string, int>();
+            _FileIDs = new Dictionary<int, string>();
+            _Errors = new Dictionary<int, List<LineError>>();
+            _Expansions = new Dictionary<int, List<expRange>>();
+            _TrackCopies = new Dictionary<int, bool>();
+
+            string err;
+            int sev;
+            int linenum, column;
+
+            foreach (string line in _Lines)
+            {
+                if (line == null) continue;
+
+                String srcType;
+                String srcFile;
+                String srcMbr;
+                String objFile;
+                String objLib;
+                String srcLib;
+                String msgid;
+                String message;
+                string fileIDName;
+
+                err = line.PadRight(500);
+                srcType = err.Substring(0, 10).Trim();
+                srcMbr = err.Substring(10, 10).Trim();
+                srcFile = err.Substring(20, 10).Trim();
+                srcLib = err.Substring(30, 10).Trim();
+                objFile = err.Substring(40, 10).Trim();
+                objLib = err.Substring(50, 10).Trim();
+                srcFile = err.Substring(20, 10).Trim();
+                sev = int.Parse(err.Substring(120, 5).Trim());
+                msgid = err.Substring(135, 7).Trim();
+                message = err.Substring(142, 250).Trim();
+                linenum = int.Parse(err.Substring(125, 10).Replace(".","").Trim());
+                if ((linenum % 100 ) == 0)
+                {
+                    linenum = linenum / 100;
+                }
+                column = 1;
+
+                fileIDName = "/" + srcLib + "/" + srcFile + "/" + srcMbr + "." +
+                    srcType.ToLower();
+
+                if (!_FileIDLookup.TryGetValue(fileIDName, out _FileID))
+                {
+                    _FileID = _nextFileId++;
+                    _FileIDLookup.Add(fileIDName, _FileID);
+                    _FileIDs.Add(_FileID, fileIDName);
+ 
+                    _Errors.Add(_FileID, new List<LineError>());
+                    _Expansions.Add(_FileID, new List<expRange>());
+                }
+
+                _Errors[_FileID].Add(new LineError(sev, linenum, column,message, msgid));
+                
+            }
+        }
+
+        public static void wrkErrors_unused()
         {
             _FileIDs = new Dictionary<int, string>();
             _Errors = new Dictionary<int, List<LineError>>();

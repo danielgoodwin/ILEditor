@@ -40,8 +40,13 @@ namespace ILEditor
             { "COBOL", Language.COBOL },
             { "CBLLE", Language.COBOL },
             { "CBBLE", Language.COBOL },
+            { "SQLCBL", Language.COBOL },
             { "PYTHON", Language.Python },
-            { "PY", Language.Python }
+            { "PY", Language.Python },
+            { "PF", Language.DDS },
+            { "LF", Language.DDS },
+            { "DSPF", Language.DDS },
+            { "PRTF", Language.DDS }
         };
 
         public static Language GetBoundLangType(string Obj)
@@ -162,7 +167,7 @@ namespace ILEditor
                 switch (Source.GetFS())
                 {
                     case FileSystem.QSYS:
-                        resultFile = IBMiUtils.DownloadMember(Source.GetLibrary(), Source.GetObject(), Source.GetName(), Source.GetExtension());
+                        resultFile = IBMiUtils.DownloadSourceMember(Source.GetLibrary(), Source.GetObject(), Source.GetName(), Source.GetExtension());
                         break;
                     case FileSystem.IFS:
                         resultFile = IBMiUtils.DownloadFile(Source.GetRemoteFile());
@@ -559,6 +564,20 @@ namespace ILEditor
             if (LastEditing != null)
                 LastEditing.DoAction(EditorAction.Dupe_Line);
         }
+
+        private void fixedToFreeConversionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (LastEditing != null)
+            {
+                RemoteSource SourceInfo = (RemoteSource)LastEditing.Tag;
+                Language Language = GetBoundLangType(SourceInfo.GetExtension());
+                if (Language == Language.RPG)
+                {
+                    SetStatus("Converting Fixed to Free in " + SourceInfo.GetName());
+                    LastEditing.DoAction(EditorAction.FixedToFreeConversion);
+                }
+            }
+        }
         #endregion
 
         #region Help dropdown
@@ -599,5 +618,7 @@ namespace ILEditor
 
         private void commentButton_Click(object sender, EventArgs e) => quickCommentToolStripMenuItem.PerformClick();
         #endregion
+
+        
     }
 }

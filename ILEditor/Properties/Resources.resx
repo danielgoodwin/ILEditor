@@ -145,6 +145,9 @@
   <data name="darkRPG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Highlighting\Dark\darkRPG.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="darkDDS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Highlighting\Dark\darkDDS.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="lightCL" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Highlighting\Light\lightCL.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -165,6 +168,9 @@
   </data>
   <data name="lightRPG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Highlighting\Light\lightRPG.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="lightDDS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Highlighting\Light\lightDDS.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="darkPython" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Highlighting\Dark\darkPython.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>

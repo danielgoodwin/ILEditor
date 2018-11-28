@@ -37,7 +37,8 @@ namespace ILEditor.UserTools
         Redo,
         Dupe_Line,
         ParseCode,
-        TasksUpdate
+        TasksUpdate,
+        FixedToFreeConversion
     }
 
     public enum Language
@@ -48,7 +49,8 @@ namespace ILEditor.UserTools
         RPG,
         SQL,
         COBOL,
-        Python
+        Python,
+        DDS
     }
 
     
@@ -130,6 +132,7 @@ namespace ILEditor.UserTools
                 case Language.CL:
                 case Language.COBOL:
                 case Language.Python:
+                case Language.DDS:
                     lang += Language.ToString();
                     break;
                 case Language.None:
@@ -145,10 +148,12 @@ namespace ILEditor.UserTools
             }
 
             if (lang != "")
-                using (Stream s = new MemoryStream(Encoding.ASCII.GetBytes(Properties.Resources.ResourceManager.GetString(lang))))
-                using (XmlTextReader reader = new XmlTextReader(s))
-                    textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
-
+                if (Properties.Resources.ResourceManager.GetString(lang) != null)
+                {
+                    using (Stream s = new MemoryStream(Encoding.ASCII.GetBytes(Properties.Resources.ResourceManager.GetString(lang))))
+                    using (XmlTextReader reader = new XmlTextReader(s))
+                        textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                }
             ElementHost host = new ElementHost();
             host.Dock = DockStyle.Fill;
             host.Child = textEditor;
@@ -211,6 +216,9 @@ namespace ILEditor.UserTools
                     break;
                 case EditorAction.Format_CL:
                     FormatCL();
+                    break;
+                case EditorAction.FixedToFreeConversion:
+                    FixedToFreeConversion();
                     break;
                 case EditorAction.Save:
                     Save();
@@ -516,6 +524,16 @@ namespace ILEditor.UserTools
             textEditor.SelectedText = "";
             int length = (RcdLen > 0 ? RcdLen : 80);
             textEditor.AppendText(String.Join(Environment.NewLine, CLFile.CorrectLines(Lines, length)));
+        }
+
+        private void FixedToFreeConversion()
+        {
+            if (this.ReadOnly) return;
+
+            string[] Lines = textEditor.Text.Split(new string[] { System.Environment.NewLine }, StringSplitOptions.None);
+            textEditor.SelectAll();
+            textEditor.SelectedText = "";
+            textEditor.AppendText(String.Join(Environment.NewLine, FixedtoFree.Convert(Lines)));
         }
 
         private void FollowingCharacter(string Char)

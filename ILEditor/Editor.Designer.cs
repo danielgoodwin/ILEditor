@@ -86,6 +86,7 @@
             this.acsButton = new System.Windows.Forms.ToolStripButton();
             this.dbgButton = new System.Windows.Forms.ToolStripButton();
             this.dockingPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.fixedToFreeConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -215,7 +216,7 @@
             this.startRemoteDebugACSToolStripMenuItem,
             this.quickMemberSearchToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // openToolboxToolStripMenuItem
@@ -317,7 +318,8 @@
             // 
             this.languageToolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cLFormattingToolStripMenuItem,
-            this.generateSQLToolStripMenuItem});
+            this.generateSQLToolStripMenuItem,
+            this.fixedToFreeConversionToolStripMenuItem});
             this.languageToolsToolStripMenuItem.Name = "languageToolsToolStripMenuItem";
             this.languageToolsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.languageToolsToolStripMenuItem.Text = "Language Tools";
@@ -598,6 +600,13 @@
             this.dockingPanel.ContentRemoved += new System.EventHandler<WeifenLuo.WinFormsUI.Docking.DockContentEventArgs>(this.dockingPanel_ContentRemoved);
             this.dockingPanel.ActiveContentChanged += new System.EventHandler(this.DockingPanel_ActiveContentChanged);
             // 
+            // fixedToFreeConversionToolStripMenuItem
+            // 
+            this.fixedToFreeConversionToolStripMenuItem.Name = "fixedToFreeConversionToolStripMenuItem";
+            this.fixedToFreeConversionToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.fixedToFreeConversionToolStripMenuItem.Text = "Fixed To Free Conversion";
+            this.fixedToFreeConversionToolStripMenuItem.Click += new System.EventHandler(this.fixedToFreeConversionToolStripMenuItem_Click);
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -684,5 +693,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton dbgButton;
         private System.Windows.Forms.ToolStripMenuItem startRemoteDebugACSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fixedToFreeConversionToolStripMenuItem;
     }
 }
