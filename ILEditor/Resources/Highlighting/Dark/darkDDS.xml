@@ -21,7 +21,129 @@
       <Word>UNIQUE</Word>
       <Word>DSPATR</Word>
       <Word>PFILE</Word>
+      <Word>ABSVAL</Word>
+      <Word>ALL</Word>
+      <Word>ALTSEQ</Word>
+      <Word>ALWNULL</Word>
+      <Word>CCSID</Word>
+      <Word>CHECK</Word>
+      <Word>CHKMSGID</Word>
+      <Word>CMP</Word>
+      <Word>CONCAT</Word>
+      <Word>DATFMT</Word>
+      <Word>DATSEP</Word>
+      <Word>DESCEND</Word>
+      <Word>DFT</Word>
+      <Word>DIGIT</Word>
+      <Word>DYNSLT</Word>
+      <Word>EDTCDE</Word>
+      <Word>FCFO</Word>
+      <Word>FIFO</Word>
+      <Word>FORMAT</Word>
+      <Word>JDFTVAL</Word>
+      <Word>JDUPSEQ</Word>
+      <Word>JFILE</Word>
+      <Word>JFLD</Word>
+      <Word>JOIN</Word>
+      <Word>JREF</Word>
+      <Word>LIFO</Word>
+      <Word>NOALTSEQ</Word>
+      <Word>RANGE</Word>
+      <Word>REF</Word>
+      <Word>REFACCPTH</Word>
+      <Word>REFFLD</Word>
+      <Word>REFSHIFT</Word>
+      <Word>RENAME</Word>
+      <Word>SIGNED</Word>
+      <Word>SST</Word>
+      <Word>TIMFMT</Word>
+      <Word>TIMSEP</Word>
+      <Word>UNIQUE</Word>
+      <Word>UNSIGNED</Word>
+      <Word>VARLEN</Word>
+      <Word>ZONE</Word>
+      <Word>CF01</Word>
+      <Word>CF02</Word>
       <Word>CF03</Word>
+      <Word>CF04</Word>
+      <Word>CF05</Word>
+      <Word>CF06</Word>
+      <Word>CF07</Word>
+      <Word>CF08</Word>
+      <Word>CF09</Word>
+      <Word>CF10</Word>
+      <Word>CF11</Word>
+      <Word>CF12</Word>
+      <Word>CF13</Word>
+      <Word>CF14</Word>
+      <Word>CF15</Word>
+      <Word>CF16</Word>
+      <Word>CF17</Word>
+      <Word>CF18</Word>
+      <Word>CF19</Word>
+      <Word>CF20</Word>
+      <Word>CF21</Word>
+      <Word>CF22</Word>
+      <Word>CF23</Word>
+      <Word>CF24</Word>
+
+      <Word>ALARM</Word>
+      <Word>ALTHELP</Word>
+      <Word>ALTNAME</Word>
+      <Word>ALTPAGEDWN</Word>
+      <Word>ALTPAGEUP</Word>
+      <Word>ALWGPH</Word>
+      <Word>ALWROL</Word>
+      <Word>ASSUME</Word>
+      <Word>AUTO</Word>
+      <Word>BLANKS</Word>
+      <Word>BLINK</Word>
+      <Word>CHANGE</Word>
+      <Word>COLOR</Word>
+      <Word>DSPATR</Word>
+      <Word>CSRLOC</Word>
+      <Word>DATE</Word>
+      <Word>CHGINPDFT</Word>
+      <Word>DFTVAL</Word>
+      <Word>DSPMOD</Word>
+      <Word>DSPSIZ</Word>
+      <Word>EDTMSK</Word>
+      <Word>EDTWRD</Word>
+      <Word>ERRMSG</Word>
+      <Word>ERRSFL</Word>
+      <Word>INDARA</Word>
+      <Word>INVITE</Word>
+      <Word>LOCK</Word>
+      <Word>MSGID</Word>
+      <Word>OVERLAY</Word>
+      <Word>OVRATR</Word>
+      <Word>OVRDTA</Word>
+      <Word>PAGEDOWN</Word>
+      <Word>PAGEUP</Word>
+      <Word>PRINT</Word>
+      <Word>PROTECT</Word>
+      <Word>PUTOVR</Word>
+      <Word>PUTRETAIN</Word>
+      <Word>ROLLUP</Word>
+      <Word>ROLLDOWN</Word>
+      <Word>SFL</Word>
+      <Word>SFLCLR</Word>
+      <Word>SFLCTL</Word>
+      <Word>SFLDROP</Word>
+      <Word>SFLDSP</Word>
+      <Word>SFLDSPCTL</Word>
+      <Word>SFLEND</Word>
+      <Word>SFLENTER</Word>
+      <Word>SFLFOLD</Word>
+      <Word>SFLLIN</Word>
+      <Word>SFLMODE</Word>
+      <Word>SFLMSG</Word>
+      <Word>SFLPGMQ</Word>
+      <Word>SFLSIZ</Word>
+      <Word>UNLOCK</Word>
+
+      
+     
     </Keywords>
     
     <!-- Digits -->
@@ -41,4 +163,5 @@
     </Rule>
 
   </RuleSet>
+  
 </SyntaxDefinition>

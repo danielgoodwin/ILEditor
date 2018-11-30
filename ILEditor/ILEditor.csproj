@@ -112,39 +112,39 @@
       <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Beans, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Beans.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.OpenJDK.Beans.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Core, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Core.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.OpenJDK.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Security, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Security.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.OpenJDK.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Text, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Text.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.OpenJDK.Text.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Tools, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Tools.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.OpenJDK.Tools.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Util, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.OpenJDK.Util.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.OpenJDK.Util.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.Runtime, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.Runtime.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.Runtime.JNI, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\IKVM.Runtime.JNI.dll</HintPath>
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\IKVM.Runtime.JNI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="jtopenlite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JTOpenLite.96.9.6.2\lib\net46\jtopenlite.dll</HintPath>
+    <Reference Include="jtopenlite, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JTOpenLite.96.9.6.3\lib\net46\jtopenlite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4j-1.2.17, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -655,7 +655,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\darkDDS.xml" />
     <Content Include="Resources\Diagram.html" />
     <None Include="Resources\Diagram\diagram.html" />
     <Content Include="Resources\Help\Compiling.html" />
@@ -704,7 +703,6 @@
     <None Include="Resources\NewIcons\divide-mathematical-sign.png" />
     <None Include="Resources\NewIcons\cube.png" />
     <None Include="Resources\NewIcons\bug.png" />
-    <Content Include="Resources\lightDDS.xml" />
     <Content Include="worksofbarry_mOq_icon.ico" />
   </ItemGroup>
   <ItemGroup>

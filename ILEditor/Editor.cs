@@ -315,6 +315,24 @@ namespace ILEditor
         {
             MemberCache.Export();
             dockingPanel.SaveAsXml(Program.PanelsXML);
+
+            //
+            // May not be neeed as content_Removed should handle
+            if (dockingPanel.DocumentsCount > 0)
+            {
+                foreach (DockPane pane in dockingPanel.Panes)
+                { 
+                    DockPanel panel = pane.DockPanel;
+                    RemoteSource src;
+                    if (panel.ActiveContent is SourceEditor)
+                    {
+                        LastEditing = null;
+                        src = (panel.ActiveContent as SourceEditor).Tag as RemoteSource;
+                        if (src != null)
+                            src.Unlock();
+                    }
+                }
+            }
         }
 
         private IDockContent GetContentFromPersistString(string persistString)
