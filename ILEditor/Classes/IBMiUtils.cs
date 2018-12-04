@@ -132,11 +132,11 @@ namespace ILEditor.Classes
                             Object.Type = Line.Substring(10, 8).Trim();
                             Object.Extension = Line.Substring(18, 10).Trim();
                             UInt32.TryParse(Line.Substring(28, 12).Trim(), out Object.SizeKB);
-                            Object.Text = Line.Substring(40, 50).Trim();
-                            Object.Owner = Line.Substring(90, 10).Trim();
-                            Object.SrcSpf = Line.Substring(100, 10).Trim();
-                            Object.SrcLib = Line.Substring(110, 10).Trim();
-                            Object.SrcMbr = Line.Substring(120, 10).Trim();
+                            Object.Text = Line.Substring(39, 50).Trim();
+                            Object.Owner = Line.Substring(89, 10).Trim();
+                            Object.SrcSpf = Line.Substring(99, 10).Trim();
+                            Object.SrcLib = Line.Substring(109, 10).Trim();
+                            Object.SrcMbr = Line.Substring(119, 10).Trim();
 
                             Objects.Add(Object);
                         }
@@ -414,28 +414,60 @@ namespace ILEditor.Classes
                     Editor.TheEditor.SetStatus("Fetching spool file listing.. (can take a moment)");
 
                     UsingQTEMPFiles(new[] { "SPOOL" });
-                    IBMi.RemoteCommand("RUNSQL SQL('CREATE TABLE QTEMP/SPOOL AS (SELECT Char(SPOOLED_FILE_NAME) as a, Char(COALESCE(USER_DATA, '''')) as b, Char(JOB_NAME) as c, Char(STATUS) as d, Char(FILE_NUMBER) as e FROM TABLE(QSYS2.OUTPUT_QUEUE_ENTRIES(''" + Lib + "'', ''" + Obj + "'', ''*NO'')) A WHERE USER_NAME = ''" + IBMi.CurrentSystem.GetValue("username").ToUpper() + "'' ORDER BY CREATE_TIMESTAMP DESC FETCH FIRST 25 ROWS ONLY) WITH DATA') COMMIT(*NONE)");
-                    file = DownloadMember("QTEMP", "SPOOL", "SPOOL");
+                    //IBMi.RemoteCommand("RUNSQL SQL('CREATE TABLE QTEMP/SPOOL AS (SELECT Char(SPOOLED_FILE_NAME) as a, Char(COALESCE(USER_DATA, '''')) as b, Char(JOB_NAME) as c, Char(STATUS) as d, Char(FILE_NUMBER) as e FROM TABLE(QSYS2.OUTPUT_QUEUE_ENTRIES(''" + Lib + "'', ''" + Obj + "'', ''*NO'')) A WHERE USER_NAME = ''" + IBMi.CurrentSystem.GetValue("username").ToUpper() + "'' ORDER BY CREATE_TIMESTAMP DESC FETCH FIRST 25 ROWS ONLY) WITH DATA') COMMIT(*NONE)");
+                    IBMi.RemoteCommand("WRKSPLF OUTPUT(*PRINT) SELECT(" + IBMi.CurrentSystem.GetValue("username").ToUpper() + ") ");
+                    //IBMi.RemoteCommand("WRKSPLF OUTPUT(*PRINT) SELECT(ROOT) ");
+                    IBMi.RemoteCommand("DLTF QTEMP/SPOOL ",false);
+                    IBMi.RemoteCommand("CRTPF QTEMP/SPOOL RCDLEN(160)", false);
+                    IBMi.RemoteCommand("CPYSPLF FILE(QPRTSPLF) TOFILE(QTEMP/SPOOL) SPLNBR(*LAST) ");
+                    file = DownloadMember("QTEMP", "SPOOL", "SPOOL", new IBMDDMi.AllFieldsDDMCallbackAdapter());
                     Editor.TheEditor.SetStatus("Finished fetching spool file listing.");
                 }
 
                 if (file != "")
                 {
                     string Line, SpoolName, UserData, Job, Status, Number;
+                    bool readytogo = false;
                     foreach (string RealLine in File.ReadAllLines(file, Program.Encoding))
                     {
                         if (RealLine.Trim() != "")
                         {
-                            Line = RealLine.PadRight(75);
-                            SpoolName = Line.Substring(0, 10).Trim();
-                            UserData = Line.Substring(10, 10).Trim();
-                            Job = Line.Substring(20, 28).Trim();
-                            Status = Line.Substring(48, 15).Trim();
-                            Number = Line.Substring(63, 11);
+                            //Line = RealLine.PadRight(75);
+                            //SpoolName = Line.Substring(0, 10).Trim();
+                            //UserData = Line.Substring(10, 10).Trim();
+                            //Job = Line.Substring(20, 28).Trim();
+                            //Status = Line.Substring(48, 15).Trim();
+                            //Number = Line.Substring(63, 11);
 
-                            if (SpoolName != "")
+                            // Only process AFTER we find 'File' 
+                            if (RealLine.StartsWith(" File"))
                             {
-                                Listing.Add(new SpoolFile(SpoolName, UserData, Job, Status, int.Parse(Number)));
+                                readytogo = true;
+                                continue;
+                            }
+
+                            if (readytogo)
+                            {
+                                Line = RealLine.PadRight(125);
+                                if (!Line.Contains("E N D   O F   L I S T I N G"))
+                                {
+
+
+                                    SpoolName = Line.Substring(0, 10).Trim();
+                                    UserData = Line.Substring(35, 10).Trim();
+                                    // Job form 000004/USER/QPADEV0
+                                    Job = Line.Substring(116, 6).Trim().PadLeft(6, '0') +
+                                        "/" + Line.Substring(12, 10).Trim() + "/" +
+                                        Line.Substring(105, 10).Trim();
+
+                                    Status = Line.Substring(45, 3).Trim();
+                                    Number = Line.Substring(101, 4).Trim();
+
+                                    if (SpoolName != "")
+                                    {
+                                        Listing.Add(new SpoolFile(SpoolName, UserData, Job, Status, int.Parse(Number)));
+                                    }
+                                }
                             }
                         }
                     }
@@ -629,12 +661,17 @@ namespace ILEditor.Classes
             if (IBMi.IsConnected())
             {
                 string filetemp = GetLocalFile("SPOOLS", Job.Replace('/', '.'), Name + '-' + Number.ToString(), "SPOOL");
-                string remoteTemp = "/tmp/" + Name + ".spool";
+                //string remoteTemp = "/tmp/" + Name + ".spool";
+                string remoteTemp = "/QSYS.LIB/QTEMP.lib/SPOOL.file/SPOOL.mbr";
 
                 Editor.TheEditor.SetStatus("Downloading spool file " + Name + "..");
-                IBMi.RemoteCommand("CPYSPLF FILE(" + Name + ") JOB(" + Job + ") SPLNBR(" + Number.ToString() + ") TOFILE(*TOSTMF) TOSTMF('" + remoteTemp + "') STMFOPT(*REPLACE)");
+                //IBMi.RemoteCommand("CPYSPLF FILE(" + Name + ") JOB(" + Job + ") SPLNBR(" + Number.ToString() + ") TOFILE(*TOSTMF) TOSTMF('" + remoteTemp + "') STMFOPT(*REPLACE)");
+                IBMi.RemoteCommand("DLTF QTEMP/SPOOL ", false);
+                IBMi.RemoteCommand("CRTPF QTEMP/SPOOL RCDLEN(160)", false);
+                IBMi.RemoteCommand("CPYSPLF FILE(" + Name + ") JOB(" + Job + ") SPLNBR(" + Number.ToString() + ") TOFILE(QTEMP/SPOOL) TOSTMF('" + remoteTemp + "') MBROPT(*REPLACE)");
 
-                if (!IBMi.DownloadFile(filetemp, remoteTemp))
+                //if (!IBMi.DownloadFile(filetemp, remoteTemp, new IBMDDMi.AllFieldsDDMCallbackAdapter()))
+                if (!IBMi.DownloadFile(filetemp, remoteTemp, new IBMDDMi.AllFieldsDDMCallbackAdapter()))
                 {
                     Editor.TheEditor.SetStatus("Downloaded spool file " + Name + ".");
                     return filetemp;
