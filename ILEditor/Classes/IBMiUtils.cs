@@ -449,10 +449,9 @@ namespace ILEditor.Classes
                             if (readytogo)
                             {
                                 Line = RealLine.PadRight(125);
-                                if (!Line.Contains("E N D   O F   L I S T I N G"))
+                                if (!Line.Contains("E N D   O F   L I S T I N G") &&
+                                    !Line.Contains("(No spooled output files)"))
                                 {
-
-
                                     SpoolName = Line.Substring(0, 10).Trim();
                                     UserData = Line.Substring(35, 10).Trim();
                                     // Job form 000004/USER/QPADEV0
